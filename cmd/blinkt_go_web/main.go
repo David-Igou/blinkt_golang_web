@@ -18,23 +18,11 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v2"
 	"net/http"
-	"os"
 	. "github.com/alexellis/blinkt_go"
 )
 
 var blinkt *Blinkt
-
-type Config struct {
-	Function []struct {
-		Path  string `yaml:"path"`
-		R     int    `yaml:"r"`
-		G     int    `yaml:"g"`
-		B     int    `yaml:"b"`
-		Pixel int    `yaml:"pixel"`
-	} `yaml:"function"`
-}
 
 type MyHandler struct {
 	session struct {
@@ -72,23 +60,5 @@ func main() {
 		mux.Handle(element.Path, &MyHandler{element})
 	}
 	http.ListenAndServe(":3000", mux)
-}
 
-func processError(err error) {
-	fmt.Println(err)
-	os.Exit(2)
-}
-
-func readFile(cfg *Config) {
-	f, err := os.Open("config.yml")
-	if err != nil {
-		processError(err)
-	}
-	defer f.Close()
-
-	decoder := yaml.NewDecoder(f)
-	err = decoder.Decode(cfg)
-	if err != nil {
-		processError(err)
-	}
 }
