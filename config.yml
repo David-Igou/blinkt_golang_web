@@ -1,0 +1,11 @@
+function:
+  - path: "/red"
+    r: 255
+    g: 0
+    b: 0
+    pixel: 1
+  - path: "/blue"
+    r: 0
+    g: 0
+    b: 255
+    pixel: 1
